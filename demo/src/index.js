@@ -38,7 +38,12 @@ class Demo extends Component {
           subdivision={16}
           render={this.metronomeStyle1}
         />
-       
+        <br/>
+        <ProMetronome
+          bpm={100}
+          subdivision={8}
+          render={this.metronomeStyle2}
+        />
       </div>
     )
   }
