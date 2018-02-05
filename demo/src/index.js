@@ -18,6 +18,7 @@ class Demo extends Component {
       <div>BPM: {props.bpm}</div>
       <div>SUBDIVISION: {props.subdivision}</div>
       <div>QUARTER NOTE: {state.qNote}</div>
+      <div>SUBDIVISION NOTE: {state.subNote}</div>
     </div>
   )
 
@@ -26,6 +27,7 @@ class Demo extends Component {
       <div>bpm: {props.bpm}</div>
       <div>subdivision: {props.subdivision}</div>
       <div>quarter note: {state.qNote}</div>
+      <div>subdivision note: {state.subNote}</div>
     </div>
   )
   
@@ -35,13 +37,13 @@ class Demo extends Component {
         <h1>react-pro-metronome Demo</h1>
         <ProMetronome
           bpm={this.state.bpm}
-          subdivision={16}
+          subdivision="4"
           render={this.metronomeStyle1}
         />
         <br/>
         <ProMetronome
-          bpm={100}
-          subdivision={8}
+          bpm={70}
+          subdivision="8t"
           render={this.metronomeStyle2}
         />
       </div>
