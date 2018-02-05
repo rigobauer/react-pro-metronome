@@ -1,16 +1,14 @@
 # react-pro-metronome
 
 [![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
 [![Coveralls][coveralls-badge]][coveralls]
+[![License][license-badge]][license]
 
 WORK IN PROGRESS: React component to create a Metronome. It uses render props, so you can decide what you want to render.
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
-
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
-
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+[build-badge]: https://img.shields.io/travis/rigobauer/react-pro-metronome/master.svg?style=flat-square
+[build]: https://travis-ci.org/rigobauer/react-pro-metronome
+[coveralls-badge]: https://img.shields.io/coveralls/rigobauer/react-pro-metronome/master.svg?style=flat-square
+[coveralls]: https://coveralls.io/github/rigobauer/react-pro-metronome
+[license-badge]: https://img.shields.io/npm/l/react-pro-metronome.svg?style=flat-square
+[license]: https://opensource.org/licenses/MIT
