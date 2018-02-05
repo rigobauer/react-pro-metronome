@@ -7,19 +7,31 @@ import ProMetronome from 'src/'
 
 describe('<ProMetronome />', () => {
 
-  /*it('should shallow render an empty <ProMetronome /> as null', () => {
-    const wrapper = shallow(<ProMetronome />)
+  it('should shallow render a default <ProMetronome /> as null', () => {
+    const wrapper = shallow(<ProMetronome render={(props, state) => null }/>)
     expect(wrapper.html())
       .to.equal(null)
   })
 
-  it('should shallow render a <ProMetronome baseline="" /> as null', () => {
-    const wrapper = shallow(<ProMetronome base="" />)
+  it('should shallow render a default <ProMetronome /> printing the default bpm', () => {
+    const wrapper = shallow(<ProMetronome render={(props, state) => <div>{props.bpm}</div> }/>)
     expect(wrapper.html())
-      .to.equal(null)
+      .to.equal('<div>80</div>')
   })
 
-  it('should shallow render a ProMetronome just with baseline as a single div', () => {
+  it('should shallow render a default <ProMetronome /> printing the configured bpm and subdivision', () => {
+    const wrapper = shallow(
+      <ProMetronome
+        bpm={120}
+        subdivision="8t"
+        render={(props, state) => <div>{props.bpm}/{props.subdivision}</div> }
+      />
+    )
+    expect(wrapper.html())
+      .to.equal('<div>120/8t</div>')
+  })
+
+  /*it('should shallow render a ProMetronome just with baseline as a single div', () => {
     const wrapper = shallow(<ProMetronome base="testing" />)
     expect(wrapper.type())
       .to.equal('div')
