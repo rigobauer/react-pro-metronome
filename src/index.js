@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-class ProMetronome extends PureComponent {
+class ProMetronome extends Component {
   
   state = {
     qNote: 1,
@@ -20,6 +20,16 @@ class ProMetronome extends PureComponent {
   componentWillReceiveProps(nextProps) {
     clearInterval(this.timerID)
     this.timerID = setInterval(this.update, Math.floor(60000/nextProps.bpm))    
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.bpm !== this.props.bpm
+      ? true
+      : nextProps.subdivision !== this.props.subdivision
+      ? true
+      : nextState.qNote !== this.state.qNote
+      ? true
+      : false
   }
 
   componentWillUnmount() {

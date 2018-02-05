@@ -9,10 +9,25 @@ class Demo extends Component {
   
   componentDidMount() {
     setTimeout(() => {
-      console.log('IN')
       this.setState({ bpm: 150 })
     }, 5000)
   }
+
+  metronomeStyle1 = (props, state) => (
+    <div style={{ border: '1px solid black' }}>
+      <div>BPM: {props.bpm}</div>
+      <div>SUBDIVISION: {props.subdivision}</div>
+      <div>QUARTER NOTE: {state.qNote}</div>
+    </div>
+  )
+
+  metronomeStyle2 = (props, state) => (
+    <div style={{ color: 'red', border: '1px solid red' }}>
+      <div>bpm: {props.bpm}</div>
+      <div>subdivision: {props.subdivision}</div>
+      <div>quarter note: {state.qNote}</div>
+    </div>
+  )
   
   render() {
     return (
@@ -21,26 +36,9 @@ class Demo extends Component {
         <ProMetronome
           bpm={this.state.bpm}
           subdivision={16}
-          render={(props, state) => (
-            <div style={{ border: '1px solid black' }}>
-              <div>BPM: {props.bpm}</div>
-              <div>SUBDIVISION: {props.subdivision}</div>
-              <div>QUARTER NOTE: {state.qNote}</div>
-            </div>
-          )}
+          render={this.metronomeStyle1}
         />
-        <br/>
-        <ProMetronome
-          bpm={100}
-          subdivision={8}
-          render={(props, state) => (
-            <div style={{ color: 'red', border: '1px solid red' }}>
-              <div>bpm: {props.bpm}</div>
-              <div>subdivision: {props.subdivision}</div>
-              <div>quarter note: {state.qNote}</div>
-            </div>
-          )}
-        />
+       
       </div>
     )
   }
