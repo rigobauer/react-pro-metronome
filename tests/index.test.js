@@ -42,6 +42,7 @@ describe('<ProMetronome />', () => {
       <ProMetronome
         bpm={80}
         subdivision="16"
+        soundEnabled={false}
         render={(props, state) => <div>{state.qNote}/{state.subNote}</div> }
       />
     )
