@@ -7,19 +7,19 @@ import ProMetronome from 'src/'
 
 describe('<ProMetronome />', () => {
 
-  it('should shallow render a default <ProMetronome /> as null', () => {
+  it('should shallow render a <ProMetronome /> as null', () => {
     const wrapper = shallow(<ProMetronome render={(props, state) => null }/>)
     expect(wrapper.html())
       .to.equal(null)
   })
 
-  it('should shallow render a default <ProMetronome /> printing the default bpm', () => {
+  it('should shallow render a <ProMetronome /> printing the default bpm', () => {
     const wrapper = shallow(<ProMetronome render={(props, state) => <div>{props.bpm}</div> }/>)
     expect(wrapper.html())
       .to.equal('<div>80</div>')
   })
 
-  it('should shallow render a default <ProMetronome /> printing the configured bpm and subdivision', () => {
+  it('should shallow render a <ProMetronome /> printing the configured bpm and subdivision', () => {
     const wrapper = shallow(
       <ProMetronome
         bpm={120}
@@ -31,63 +31,60 @@ describe('<ProMetronome />', () => {
       .to.equal('<div>120/8t</div>')
   })
 
-  /*it('should shallow render a ProMetronome just with baseline as a single div', () => {
-    const wrapper = shallow(<ProMetronome base="testing" />)
-    expect(wrapper.type())
-      .to.equal('div')
-    expect(wrapper.text())
-      .to.equal('testing')
-  })
-
-  it('should shallow render a ProMetronome with baseline and subscript', () => {
-    const wrapper = shallow(<ProMetronome base="testing" sub="rocks" />)
-    expect(wrapper.childAt(0).html())
-      .to.equal('<div style="font-size:1em;display:flex;flex-flow:row nowrap;align-items:stretch">' +
-                  '<div>testing</div>' +
-                  '<div style="font-size:0.5em;display:flex;flex-flow:column nowrap;justify-content:space-between;padding-left:0.1em">' +
-                    '<div></div>' +
-                    '<div>rocks</div>' +
-                  '</div>' +
-                '</div>')
-  })
-
-  it('should shallow render a ProMetronome component with all basic values', () => {
-    const wrapper = shallow(<ProMetronome base="baseline" sup="superscript" sub="subscript" />)
-    expect(wrapper.childAt(0).html())
-      .to.equal('<div style="font-size:1em;display:flex;flex-flow:row nowrap;align-items:stretch">' +
-                  '<div>baseline</div>' +
-                  '<div style="font-size:0.5em;display:flex;flex-flow:column nowrap;justify-content:space-between;padding-left:0.1em">' +
-                    '<div>superscript</div>' +
-                    '<div>subscript</div>' +
-                  '</div>' +
-                '</div>')
-  })
-
-  it('should shallow render a ProMetronome component with a class', () => {
-    const wrapper = shallow(<ProMetronome className="testing rocks" base="baseline" sup="superscript" sub="subscript" />)
-    expect(wrapper.type())
-      .to.equal('div')
-    expect(wrapper.hasClass('testing') && wrapper.hasClass('rocks'))
-      .to.equal(true)
-  })
-
-  it('should shallow render a ProMetronome component with inline styles that overwrite the default display inline-block mode', () => {
-    const wrapper = shallow(<ProMetronome style={{ display: 'block' }} base="baseline" sup="superscript" sub="subscript" />)
-    expect(wrapper.prop('style').display)
-      .to.deep.equal('block')
-  })
-
-  it('should mounts <Abc2SvgDrums /> with a simple abcNotation', () => {
+  it('should shallow render a <ProMetronome /> printing quarter notes and 16th notes', () => {
+    let clock = sinon.useFakeTimers()
     sinon.spy(ProMetronome.prototype, 'render')
-    const wrapper = mount(<ProMetronome base="baseline" sup="superscript" sub="subscript" />)
+    sinon.spy(ProMetronome.prototype, 'componentWillReceiveProps')
+    sinon.spy(ProMetronome.prototype, 'componentWillUnmount')
+
+    let interval = Math.floor(60000/(80*4))
+    const wrapper = mount(
+      <ProMetronome
+        bpm={80}
+        subdivision="16"
+        render={(props, state) => <div>{state.qNote}/{state.subNote}</div> }
+      />
+    )
+
+    expect(wrapper.text())
+      .to.equal('1/1')
+    clock.tick(interval + 5)
+    expect(wrapper.text())
+      .to.equal('1/2')
+    clock.tick(interval + 5)
+    expect(wrapper.text())
+      .to.equal('1/3')
+    clock.tick(interval + 5)
+    expect(wrapper.text())
+      .to.equal('1/4')
+    clock.tick(interval + 5)
+    expect(wrapper.text())
+      .to.equal('2/1')
+    clock.tick(interval + 5)
+    expect(wrapper.text())
+      .to.equal('2/2')
+    clock.tick(10*interval + 5)
+    expect(wrapper.text())
+      .to.equal('4/4')
+    clock.tick(interval + 5)
+    expect(wrapper.text())
+      .to.equal('1/1')
+    
+    wrapper.setProps({ bpm: 100, subdivision: '8' })
+    expect(ProMetronome.prototype.componentWillReceiveProps.calledOnce).to.equal(true)
+    interval = Math.floor(60000/(100*2))
+    clock.tick(interval + 5)
+    expect(wrapper.text())
+      .to.equal('1/2')
+
+    clock.restore()
+
     expect(ProMetronome.prototype.render.callCount)
-      .to.equal(1)
-    wrapper.setProps({ base: 'baseline', sup: 'superscript', sub: 'subscript' })
-    expect(ProMetronome.prototype.render.callCount)
-      .to.equal(1)
-    wrapper.setProps({ base: 'newbaseline', sup: 'superscript', sub: 'subscript' })
-    expect(ProMetronome.prototype.render.callCount)
-      .to.equal(2)
-  })*/
+      .to.equal(19)
+    expect(ProMetronome.prototype.componentWillUnmount.notCalled).to.equal(true)
+    wrapper.unmount()
+    expect(ProMetronome.prototype.componentWillUnmount.calledOnce).to.equal(true)
+    
+  })
 
 })
