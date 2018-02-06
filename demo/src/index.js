@@ -54,6 +54,7 @@ class Demo extends Component {
         <ProMetronome
           bpm={this.state.bpm1}
           subdivision="4"
+          soundEnabled={false}
           render={this.metronomeStyle1}
         />
         <br/>

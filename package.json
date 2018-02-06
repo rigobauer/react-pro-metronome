@@ -19,6 +19,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
+    "howler": "^2.0.8",
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {

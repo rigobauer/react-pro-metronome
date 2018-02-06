@@ -4,7 +4,7 @@
 [![Coveralls][coveralls-badge]][coveralls]
 [![License][license-badge]][license]
 
-WORK IN PROGRESS: React component to create a Metronome. It uses render props, so you can decide what you want to render.
+React component to create a Metronome. It uses render props, so you can decide what you want to render.
 
 [build-badge]: https://img.shields.io/travis/rigobauer/react-pro-metronome/master.svg?style=flat-square
 [build]: https://travis-ci.org/rigobauer/react-pro-metronome
