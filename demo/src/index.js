@@ -61,6 +61,7 @@ class Demo extends Component {
         <ProMetronome
           bpm={this.state.bpm2}
           subdivision="8t"
+          soundPattern={[3, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]}
           render={this.metronomeStyle2}
         />
       </div>

@@ -2,13 +2,17 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Howl } from 'howler'
 
-import qNoteSoundFileMP3 from './sounds/click_qnote.mp3'
-import qNoteSoundFileOGG from './sounds/click_qnote.ogg'
-import qNoteSoundFileAAC from './sounds/click_qnote.aac'
+import click3SoundFileMP3 from './sounds/click3.mp3'
+import click3SoundFileOGG from './sounds/click3.ogg'
+import click3SoundFileAAC from './sounds/click3.aac'
 
-import subNoteSoundFileMP3 from './sounds/click_subnote.mp3'
-import subNoteSoundFileOGG from './sounds/click_subnote.ogg'
-import subNoteSoundFileAAC from './sounds/click_subnote.aac'
+import click2SoundFileMP3 from './sounds/click2.mp3'
+import click2SoundFileOGG from './sounds/click2.ogg'
+import click2SoundFileAAC from './sounds/click2.aac'
+
+import click1SoundFileMP3 from './sounds/click1.mp3'
+import click1SoundFileOGG from './sounds/click1.ogg'
+import click1SoundFileAAC from './sounds/click1.aac'
 
 const subdivisionFactor = {
   '4': 1,
@@ -26,29 +30,38 @@ class ProMetronome extends PureComponent {
     subNote: 1,
   }
 
-  qNoteSound = new Howl({
-    src: [qNoteSoundFileMP3, qNoteSoundFileOGG, qNoteSoundFileAAC],
-    preload: true
-  })
-
-  subNoteSound = new Howl({
-    src: [subNoteSoundFileMP3, subNoteSoundFileOGG, subNoteSoundFileAAC],
-    preload: true
-  })
+  clickSounds = [
+    new Howl({
+      src: [click1SoundFileMP3, click1SoundFileOGG, click1SoundFileAAC],
+      preload: true,
+    }),
+    new Howl({
+      src: [click2SoundFileMP3, click2SoundFileOGG, click2SoundFileAAC],
+      preload: true,
+    }),
+    new Howl({
+      src: [click3SoundFileMP3, click3SoundFileOGG, click3SoundFileAAC],
+      preload: true,
+    })
+  ]
 
   update = () => {
-    if (this.state.subNote < subdivisionFactor[this.props.subdivision]) {
-      if (this.props.soundEnabled)
-        this.subNoteSound.play()
 
+    const { soundEnabled, soundPattern, subdivision } = this.props
+    const { qNote, subNote } = this.state
+
+    if (soundEnabled) {
+      const soundLevel = soundPattern[(qNote-1)*subdivisionFactor[subdivision] + subNote - 1]
+      if (soundLevel > 0 && soundLevel <= 3)
+        this.clickSounds[soundLevel-1].play()
+    }
+
+    if (subNote < subdivisionFactor[subdivision]) {
       this.setState(prevState => ({ 
         subNote: prevState.subNote + 1
       }))
     }
     else {
-      if (this.props.soundEnabled)
-        this.qNoteSound.play()
-
       this.setState(prevState => ({
         qNote: prevState.qNote === 4 ? 1 : prevState.qNote + 1,
         subNote: 1
@@ -88,13 +101,15 @@ ProMetronome.propTypes = {
   bpm: PropTypes.number,
   subdivision: PropTypes.oneOf(['4', '8', '8t', '16', '16t', '32']),
   soundEnabled: PropTypes.bool,
+  soundPattern: PropTypes.array,
   render: PropTypes.func.isRequired,
 }
 
 ProMetronome.defaultProps = {
   bpm: 80,
   subdivision: '4',
-  soundEnabled: true,  
+  soundEnabled: true,
+  soundPattern: [3, 3, 3, 3]
 }
 
 export default ProMetronome
