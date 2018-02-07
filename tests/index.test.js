@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import { expect } from 'chai'
 import sinon from 'sinon'
+import { Howl } from 'howler'
 
 import ProMetronome from 'src/'
 
@@ -33,6 +34,7 @@ describe('<ProMetronome />', () => {
 
   it('should shallow render a <ProMetronome /> printing quarter notes and 16th notes', () => {
     let clock = sinon.useFakeTimers()
+    sinon.stub(Howl.prototype, 'play')
     sinon.spy(ProMetronome.prototype, 'render')
     sinon.spy(ProMetronome.prototype, 'componentWillReceiveProps')
     sinon.spy(ProMetronome.prototype, 'componentWillUnmount')
@@ -42,6 +44,8 @@ describe('<ProMetronome />', () => {
       <ProMetronome
         bpm={80}
         subdivision={4}
+        soundEnabled={true}
+        soundPattern="3222322232223222"
         render={(props, state) => <div>{state.qNote}/{state.subNote}</div> }
       />
     )
@@ -70,8 +74,11 @@ describe('<ProMetronome />', () => {
     expect(wrapper.text())
       .to.equal('1/1')
     
-    wrapper.setProps({ bpm: 100, subdivision: 2 })
-    expect(ProMetronome.prototype.componentWillReceiveProps.calledOnce).to.equal(true)
+    sinon.assert.callCount(Howl.prototype.play, 16)
+    
+    wrapper.setProps({ bpm: 100, subdivision: 2, soundPattern: "32323232" })
+    expect(ProMetronome.prototype.componentWillReceiveProps.calledOnce)
+      .to.equal(true)
     interval = Math.floor(60000/(100*2))
     clock.tick(interval + 5)
     expect(wrapper.text())
@@ -79,12 +86,14 @@ describe('<ProMetronome />', () => {
 
     expect(ProMetronome.prototype.render.callCount)
       .to.equal(19)
-    expect(ProMetronome.prototype.componentWillUnmount.notCalled).to.equal(true)
+    expect(ProMetronome.prototype.componentWillUnmount.notCalled)
+      .to.equal(true)
     wrapper.unmount()
-    expect(ProMetronome.prototype.componentWillUnmount.calledOnce).to.equal(true)
+    expect(ProMetronome.prototype.componentWillUnmount.calledOnce)
+      .to.equal(true)
 
     clock.restore()
-    
+    Howl.prototype.play.restore()
   })
 
   it('should shallow render a <ProMetronome /> and check soundPattern type and length errors', () => {
