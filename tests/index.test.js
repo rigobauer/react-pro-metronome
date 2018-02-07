@@ -77,14 +77,40 @@ describe('<ProMetronome />', () => {
     expect(wrapper.text())
       .to.equal('1/2')
 
-    clock.restore()
-
     expect(ProMetronome.prototype.render.callCount)
       .to.equal(19)
     expect(ProMetronome.prototype.componentWillUnmount.notCalled).to.equal(true)
     wrapper.unmount()
     expect(ProMetronome.prototype.componentWillUnmount.calledOnce).to.equal(true)
+
+    clock.restore()
     
+  })
+
+  it('should shallow render a <ProMetronome /> and check soundPattern type and length errors', () => {
+    sinon.stub(console, 'error')
+
+    let interval = Math.floor(60000/(80*4))
+    const wrapper = mount(
+      <ProMetronome
+        bpm={80}
+        subdivision={2}
+        soundPattern={32323232}
+        render={(props, state) => <div>{state.qNote}/{state.subNote}</div> }
+      />
+    )
+
+    sinon.assert.callCount(console.error, 1)
+    sinon.assert.calledWithMatch(console.error,'Warning: Failed prop type: Invalid prop `soundPattern` of type `number` supplied to ProMetronome, expected `string`.')
+    console.error.resetHistory()
+    wrapper.setProps({ soundPattern: '323232323' })
+    sinon.assert.callCount(console.error, 1)
+    sinon.assert.calledWithMatch(console.error,'Warning: Failed prop type: Invalid prop `soundPattern` with length 9 supplied to ProMetronome. Length value doesn\'t match with the subdivision, expected 8.')
+    console.error.resetHistory()
+    wrapper.setProps({ soundPattern: '32323232' })
+    sinon.assert.notCalled(console.error)
+
+    console.error.restore()
   })
 
 })
