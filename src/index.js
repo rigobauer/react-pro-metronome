@@ -14,14 +14,6 @@ import click1SoundFileMP3 from './sounds/click1.mp3'
 import click1SoundFileOGG from './sounds/click1.ogg'
 import click1SoundFileAAC from './sounds/click1.aac'
 
-const subdivisionFactor = {
-  '4': 1,
-  '8': 2,
-  '8t': 3,
-  '16': 4,
-  '16t': 6,
-  '32': 8,
-}
 
 class ProMetronome extends PureComponent {
   
@@ -50,13 +42,13 @@ class ProMetronome extends PureComponent {
     const { soundEnabled, soundPattern, subdivision } = this.props
     const { qNote, subNote } = this.state
 
-    if (soundEnabled && soundPattern.length === 4*subdivisionFactor[subdivision]) {
-      const soundLevel = soundPattern.charAt((qNote-1)*subdivisionFactor[subdivision] + subNote - 1)
+    if (soundEnabled && soundPattern.length === 4*subdivision) {
+      const soundLevel = soundPattern.charAt((qNote-1)*subdivision + subNote - 1)
       if (soundLevel > 0 && soundLevel <= 3)
         this.clickSounds[soundLevel-1].play()
     }
 
-    if (subNote < subdivisionFactor[subdivision]) {
+    if (subNote < subdivision) {
       this.setState(prevState => ({ 
         subNote: prevState.subNote + 1
       }))
@@ -70,7 +62,7 @@ class ProMetronome extends PureComponent {
   }
 
   calculateInterval = (bpm, subdivision) => {
-    return Math.floor(60000 / (bpm * subdivisionFactor[subdivision]))
+    return Math.floor(60000 / (bpm * subdivision))
   }
 
   componentDidMount() {
@@ -99,7 +91,7 @@ class ProMetronome extends PureComponent {
 
 ProMetronome.propTypes = {
   bpm: PropTypes.number,
-  subdivision: PropTypes.oneOf(['4', '8', '8t', '16', '16t', '32']),
+  subdivision: PropTypes.number,
   soundEnabled: PropTypes.bool,
   soundPattern: PropTypes.string,
   render: PropTypes.func.isRequired,
@@ -107,7 +99,7 @@ ProMetronome.propTypes = {
 
 ProMetronome.defaultProps = {
   bpm: 80,
-  subdivision: '4',
+  subdivision: 1,
   soundEnabled: false,
   soundPattern: '',
 }

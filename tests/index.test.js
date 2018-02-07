@@ -23,12 +23,12 @@ describe('<ProMetronome />', () => {
     const wrapper = shallow(
       <ProMetronome
         bpm={120}
-        subdivision="8t"
+        subdivision={3}
         render={(props, state) => <div>{props.bpm}/{props.subdivision}</div> }
       />
     )
     expect(wrapper.html())
-      .to.equal('<div>120/8t</div>')
+      .to.equal('<div>120/3</div>')
   })
 
   it('should shallow render a <ProMetronome /> printing quarter notes and 16th notes', () => {
@@ -41,7 +41,7 @@ describe('<ProMetronome />', () => {
     const wrapper = mount(
       <ProMetronome
         bpm={80}
-        subdivision="16"
+        subdivision={4}
         render={(props, state) => <div>{state.qNote}/{state.subNote}</div> }
       />
     )
@@ -70,7 +70,7 @@ describe('<ProMetronome />', () => {
     expect(wrapper.text())
       .to.equal('1/1')
     
-    wrapper.setProps({ bpm: 100, subdivision: '8' })
+    wrapper.setProps({ bpm: 100, subdivision: 2 })
     expect(ProMetronome.prototype.componentWillReceiveProps.calledOnce).to.equal(true)
     interval = Math.floor(60000/(100*2))
     clock.tick(interval + 5)

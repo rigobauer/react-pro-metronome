@@ -53,15 +53,15 @@ class Demo extends Component {
         <h1>react-pro-metronome Demo</h1>
         <ProMetronome
           bpm={this.state.bpm1}
-          subdivision="4"
+          subdivision={1}
           render={this.metronomeStyle1}
         />
         <br/>
         <ProMetronome
           bpm={this.state.bpm2}
-          subdivision="8t"
+          subdivision={5}
           soundEnabled={true}
-          soundPattern="300200200200"
+          soundPattern="30011200112001120011"
           render={this.metronomeStyle2}
         />
       </div>
