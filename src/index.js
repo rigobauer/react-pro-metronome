@@ -50,8 +50,8 @@ class ProMetronome extends PureComponent {
     const { soundEnabled, soundPattern, subdivision } = this.props
     const { qNote, subNote } = this.state
 
-    if (soundEnabled) {
-      const soundLevel = soundPattern[(qNote-1)*subdivisionFactor[subdivision] + subNote - 1]
+    if (soundEnabled && soundPattern.length === 4*subdivisionFactor[subdivision]) {
+      const soundLevel = soundPattern.charAt((qNote-1)*subdivisionFactor[subdivision] + subNote - 1)
       if (soundLevel > 0 && soundLevel <= 3)
         this.clickSounds[soundLevel-1].play()
     }
@@ -101,15 +101,15 @@ ProMetronome.propTypes = {
   bpm: PropTypes.number,
   subdivision: PropTypes.oneOf(['4', '8', '8t', '16', '16t', '32']),
   soundEnabled: PropTypes.bool,
-  soundPattern: PropTypes.array,
+  soundPattern: PropTypes.string,
   render: PropTypes.func.isRequired,
 }
 
 ProMetronome.defaultProps = {
   bpm: 80,
   subdivision: '4',
-  soundEnabled: true,
-  soundPattern: [3, 3, 3, 3]
+  soundEnabled: false,
+  soundPattern: '',
 }
 
 export default ProMetronome

@@ -54,14 +54,14 @@ class Demo extends Component {
         <ProMetronome
           bpm={this.state.bpm1}
           subdivision="4"
-          soundEnabled={false}
           render={this.metronomeStyle1}
         />
         <br/>
         <ProMetronome
           bpm={this.state.bpm2}
           subdivision="8t"
-          soundPattern={[3, 0, 0, 2, 0, 0, 2, 0, 0, 2, 0, 0]}
+          soundEnabled={true}
+          soundPattern="300200200200"
           render={this.metronomeStyle2}
         />
       </div>
