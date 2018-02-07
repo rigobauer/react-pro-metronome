@@ -93,7 +93,16 @@ ProMetronome.propTypes = {
   bpm: PropTypes.number,
   subdivision: PropTypes.number,
   soundEnabled: PropTypes.bool,
-  soundPattern: PropTypes.string,
+  soundPattern: function(props, propName, componentName) {
+    if (props[propName]) {
+      const propValue = props[propName],
+            propType = typeof propValue
+      if (propType !== 'string')
+        return new Error('Invalid prop `' + propName + '` of type `' + propType + '` supplied to ' + componentName + ', expected `string`.')
+      if (propValue.length > 0 && propValue.length !== 4*props['subdivision'])
+        return new Error('Invalid prop `' + propName + '` with length ' + propValue.length + ' supplied to ' + componentName + '. Length value doesn\'t match with the subdivision, expected ' + 4*props['subdivision'] + '.')
+    }
+  },
   render: PropTypes.func.isRequired,
 }
 
