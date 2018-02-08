@@ -14,46 +14,44 @@ import click1SoundFileMP3 from './sounds/click1.mp3'
 import click1SoundFileOGG from './sounds/click1.ogg'
 import click1SoundFileAAC from './sounds/click1.aac'
 
-
 class ProMetronome extends PureComponent {
-  
   state = {
     qNote: 1,
-    subNote: 1,
+    subNote: 1
   }
 
   clickSounds = [
     new Howl({
       src: [click1SoundFileMP3, click1SoundFileOGG, click1SoundFileAAC],
-      preload: true,
+      preload: true
     }),
     new Howl({
       src: [click2SoundFileMP3, click2SoundFileOGG, click2SoundFileAAC],
-      preload: true,
+      preload: true
     }),
     new Howl({
       src: [click3SoundFileMP3, click3SoundFileOGG, click3SoundFileAAC],
-      preload: true,
+      preload: true
     })
   ]
 
   update = () => {
-
     const { soundEnabled, soundPattern, subdivision } = this.props
     const { qNote, subNote } = this.state
 
-    if (soundEnabled && soundPattern.length === 4*subdivision) {
-      const soundLevel = soundPattern.charAt((qNote-1)*subdivision + subNote - 1)
+    if (soundEnabled && soundPattern.length === 4 * subdivision) {
+      const soundLevel = soundPattern.charAt(
+        (qNote - 1) * subdivision + subNote - 1
+      )
       if (soundLevel > 0 && soundLevel <= 3)
-        this.clickSounds[soundLevel-1].play()
+        this.clickSounds[soundLevel - 1].play()
     }
 
     if (subNote < subdivision) {
-      this.setState(prevState => ({ 
+      this.setState(prevState => ({
         subNote: prevState.subNote + 1
       }))
-    }
-    else {
+    } else {
       this.setState(prevState => ({
         qNote: prevState.qNote === 4 ? 1 : prevState.qNote + 1,
         subNote: 1
@@ -68,16 +66,16 @@ class ProMetronome extends PureComponent {
   componentDidMount() {
     this.timerID = setInterval(
       this.update,
-      this.calculateInterval(this.props.bpm, this.props.subdivision),
-    )    
+      this.calculateInterval(this.props.bpm, this.props.subdivision)
+    )
   }
 
   componentWillReceiveProps(nextProps) {
     clearInterval(this.timerID)
     this.timerID = setInterval(
       this.update,
-      this.calculateInterval(nextProps.bpm, nextProps.subdivision),
-    )    
+      this.calculateInterval(nextProps.bpm, nextProps.subdivision)
+    )
   }
 
   componentWillUnmount() {
@@ -96,21 +94,39 @@ ProMetronome.propTypes = {
   soundPattern: function(props, propName, componentName) {
     if (props[propName]) {
       const propValue = props[propName],
-            propType = typeof propValue
+        propType = typeof propValue
       if (propType !== 'string')
-        return new Error('Invalid prop `' + propName + '` of type `' + propType + '` supplied to ' + componentName + ', expected `string`.')
-      if (propValue.length > 0 && propValue.length !== 4*props['subdivision'])
-        return new Error('Invalid prop `' + propName + '` with length ' + propValue.length + ' supplied to ' + componentName + '. Length value doesn\'t match with the subdivision, expected ' + 4*props['subdivision'] + '.')
+        return new Error(
+          'Invalid prop `' +
+            propName +
+            '` of type `' +
+            propType +
+            '` supplied to ' +
+            componentName +
+            ', expected `string`.'
+        )
+      if (propValue.length > 0 && propValue.length !== 4 * props['subdivision'])
+        return new Error(
+          'Invalid prop `' +
+            propName +
+            '` with length ' +
+            propValue.length +
+            ' supplied to ' +
+            componentName +
+            ". Length value doesn't match with the subdivision, expected " +
+            4 * props['subdivision'] +
+            '.'
+        )
     }
   },
-  render: PropTypes.func.isRequired,
+  render: PropTypes.func.isRequired
 }
 
 ProMetronome.defaultProps = {
   bpm: 80,
   subdivision: 1,
   soundEnabled: false,
-  soundPattern: '',
+  soundPattern: ''
 }
 
 export default ProMetronome

@@ -4,12 +4,11 @@ import { render } from 'react-dom'
 import ProMetronome from '../../src'
 
 class Demo extends Component {
-  
   state = {
     bpm1: 90,
-    bpm2: 70,
+    bpm2: 70
   }
-  
+
   componentDidMount() {
     setTimeout(() => {
       this.setState({ bpm1: 150 })
@@ -26,27 +25,32 @@ class Demo extends Component {
   )
 
   metronomeStyle2 = (props, state) => (
-    <div style={{ display: 'inline-block', color: 'red', border: '1px solid red' }}>
+    <div
+      style={{ display: 'inline-block', color: 'red', border: '1px solid red' }}
+    >
       <div>bpm: {props.bpm}</div>
-      <button onClick={() => {
-        if (this.state.bpm2 > 1)
-          this.setState(prevState => ({ bpm2: prevState.bpm2 - 1 }))
-      }}>
+      <button
+        onClick={() => {
+          if (this.state.bpm2 > 1)
+            this.setState(prevState => ({ bpm2: prevState.bpm2 - 1 }))
+        }}
+      >
         -
       </button>{' '}
-      <button onClick={() => {
-        if (this.state.bpm2 < 160)
-          this.setState(prevState => ({ bpm2: prevState.bpm2 + 1 }))
-      }}>
+      <button
+        onClick={() => {
+          if (this.state.bpm2 < 160)
+            this.setState(prevState => ({ bpm2: prevState.bpm2 + 1 }))
+        }}
+      >
         +
       </button>
       <div>subdivision: {props.subdivision}</div>
       <div>quarter note: {state.qNote}</div>
       <div>subdivision note: {state.subNote}</div>
-      
     </div>
   )
-  
+
   render() {
     return (
       <div>
@@ -56,7 +60,7 @@ class Demo extends Component {
           subdivision={1}
           render={this.metronomeStyle1}
         />
-        <br/>
+        <br />
         <ProMetronome
           bpm={this.state.bpm2}
           subdivision={5}

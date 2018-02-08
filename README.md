@@ -50,6 +50,7 @@ Here you have an easy example of a metronome with a click in 8th notes, that jus
 ```
 
 This will render (at 95 bpm)....
+
 ```
 1/1... 1/2... 2/1... 2/2... 3/1... 3/2... 4/1... 4/2... 1/1
 ```
@@ -58,21 +59,21 @@ This will render (at 95 bpm)....
 
 ### Component props
 
-|    Parameter    | Description                                                               |  Type   |   Values   | Default |
-| :-------------: | ------------------------------------------------------------------------- | :-----: | :--------: | :-----: |
-| bpm | Set the click speed (_beeps per minute_). | number | 1-300 |  80  |
-| subdivision | Set the number of notes(clicks) you want to have from one quarter note and the next one. For example, if you want your metronome to have a click in 16th notes, you'll have to set subdivision at 4 (each quarter note has four 16th note). | number | 1-8 |  1  |
-| soundEnabled | Enable/disable all click sounds. | boolean | true/false |  false  |
-| soundPattern | Define the sound level for each one of the notes of a bar, including subdivisions. It's a string that has to have the length of the number of notes you have in a bar (including subdivisions) in which each character define the sound level: '0' (no sound), '1' (low sound), '2' (medium sound) and '3' (high sound). | string | String composed by: '0', '1', '2' or '3' |  ''  |
-| render | Function where you can define what you want the component to render. | function | function |  -  |
+|  Parameter   | Description                                                                                                                                                                                                                                                                                                              |   Type   |                  Values                  | Default |
+| :----------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------: | :--------------------------------------: | :-----: |
+|     bpm      | Set the click speed (_beeps per minute_).                                                                                                                                                                                                                                                                                |  number  |                  1-300                   |   80    |
+| subdivision  | Set the number of notes(clicks) you want to have from one quarter note and the next one. For example, if you want your metronome to have a click in 16th notes, you'll have to set subdivision at 4 (each quarter note has four 16th note).                                                                              |  number  |                   1-8                    |    1    |
+| soundEnabled | Enable/disable all click sounds.                                                                                                                                                                                                                                                                                         | boolean  |                true/false                |  false  |
+| soundPattern | Define the sound level for each one of the notes of a bar, including subdivisions. It's a string that has to have the length of the number of notes you have in a bar (including subdivisions) in which each character define the sound level: '0' (no sound), '1' (low sound), '2' (medium sound) and '3' (high sound). |  string  | String composed by: '0', '1', '2' or '3' |   ''    |
+|    render    | Function where you can define what you want the component to render.                                                                                                                                                                                                                                                     | function |                 function                 |    -    |
 
-### Render prop 
+### Render prop
 
-|    Parameter    | Description                                                               |  Type   |   Values   | Default |
-| :-------------: | ------------------------------------------------------------------------- | :-----: | :--------: | :-----: |
-| props | Object with all the props the component is using (passed to the component or default values established) | Object | - | - |
-| state.qNote | Current quarter note. | number | 1-4 | - |
-| state.subNote | Current subdivision note. | number | 1-[_props.subdivision_] | - |
+|   Parameter   | Description                                                                                              |  Type  |         Values          | Default |
+| :-----------: | -------------------------------------------------------------------------------------------------------- | :----: | :---------------------: | :-----: |
+|     props     | Object with all the props the component is using (passed to the component or default values established) | Object |            -            |    -    |
+|  state.qNote  | Current quarter note.                                                                                    | number |           1-4           |    -    |
+| state.subNote | Current subdivision note.                                                                                | number | 1-[_props.subdivision_] |    -    |
 
 ## References
 
@@ -81,7 +82,6 @@ This will render (at 95 bpm)....
 ## Legal
 
 Released under MIT license.
-
 
 [build-badge]: https://img.shields.io/travis/rigobauer/react-pro-metronome/master.svg?style=flat-square
 [build]: https://travis-ci.org/rigobauer/react-pro-metronome
