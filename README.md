@@ -78,6 +78,10 @@ This will render (at 95 bpm)....
 
 * If you still don't know how cool [render props](https://reactjs.org/docs/render-props.html) are, you should go and check the list [awesome-react-render-props](https://github.com/jaredpalmer/awesome-react-render-props) created by [Jared Palmer](https://github.com/jaredpalmer).
 
+## Legal
+
+Released under MIT license.
+
 
 [build-badge]: https://img.shields.io/travis/rigobauer/react-pro-metronome/master.svg?style=flat-square
 [build]: https://travis-ci.org/rigobauer/react-pro-metronome
