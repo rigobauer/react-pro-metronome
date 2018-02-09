@@ -6,7 +6,8 @@ import ProMetronome from '../../src'
 class Demo extends Component {
   state = {
     bpm1: 90,
-    bpm2: 70
+    bpm2: 70,
+    isPlaying2: false
   }
 
   componentDidMount() {
@@ -48,6 +49,13 @@ class Demo extends Component {
       <div>subdivision: {props.subdivision}</div>
       <div>quarter note: {state.qNote}</div>
       <div>subdivision note: {state.subNote}</div>
+      <button
+        onClick={() => {
+          this.setState(prevState => ({ isPlaying2: !prevState.isPlaying2 }))
+        }}
+      >
+        {props.isPlaying ? 'STOP' : 'PLAY'}
+      </button>
     </div>
   )
 
@@ -64,6 +72,7 @@ class Demo extends Component {
         <ProMetronome
           bpm={this.state.bpm2}
           subdivision={5}
+          isPlaying={this.state.isPlaying2}
           soundEnabled={true}
           soundPattern="30011200112001120011"
           render={this.metronomeStyle2}

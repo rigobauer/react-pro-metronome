@@ -14,6 +14,9 @@ import click1SoundFileMP3 from './sounds/click1.mp3'
 import click1SoundFileOGG from './sounds/click1.ogg'
 import click1SoundFileAAC from './sounds/click1.aac'
 
+const MAXBPM = 300
+const MAXSUBDIVISION = 8
+
 class ProMetronome extends PureComponent {
   state = {
     qNote: 1,
@@ -64,18 +67,35 @@ class ProMetronome extends PureComponent {
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
-      this.update,
-      this.calculateInterval(this.props.bpm, this.props.subdivision)
-    )
+    if (this.props.isPlaying) {
+      this.timerID = setInterval(
+        this.update,
+        this.calculateInterval(this.props.bpm, this.props.subdivision)
+      )
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    clearInterval(this.timerID)
-    this.timerID = setInterval(
-      this.update,
-      this.calculateInterval(nextProps.bpm, nextProps.subdivision)
-    )
+    if (nextProps.isPlaying != this.props.isPlaying) {
+      if (nextProps.isPlaying) {
+        this.timerID = setInterval(
+          this.update,
+          this.calculateInterval(nextProps.bpm, nextProps.subdivision)
+        )
+      } else {
+        clearInterval(this.timerID)
+      }
+    } else if (
+      nextProps.isPlaying &&
+      (nextProps.bpm != this.props.bpm ||
+        nextProps.subdivision != this.props.subdivision)
+    ) {
+      clearInterval(this.timerID)
+      this.timerID = setInterval(
+        this.update,
+        this.calculateInterval(nextProps.bpm, nextProps.subdivision)
+      )
+    }
   }
 
   componentWillUnmount() {
@@ -88,8 +108,63 @@ class ProMetronome extends PureComponent {
 }
 
 ProMetronome.propTypes = {
-  bpm: PropTypes.number,
-  subdivision: PropTypes.number,
+  bpm: function(props, propName, componentName) {
+    if (props[propName]) {
+      const propValue = props[propName],
+        propType = typeof propValue
+      if (propType !== 'number')
+        return new Error(
+          'Invalid prop `' +
+            propName +
+            '` of type `' +
+            propType +
+            '` supplied to ' +
+            componentName +
+            ', expected `number`.'
+        )
+      if (propValue < 1 || propValue > MAXBPM)
+        return new Error(
+          'Invalid prop `' +
+            propName +
+            '` with value ' +
+            propValue +
+            ' supplied to ' +
+            componentName +
+            '. Allowed range is 1-' +
+            MAXBPM +
+            '.'
+        )
+    }
+  },
+  subdivision: function(props, propName, componentName) {
+    if (props[propName]) {
+      const propValue = props[propName],
+        propType = typeof propValue
+      if (propType !== 'number')
+        return new Error(
+          'Invalid prop `' +
+            propName +
+            '` of type `' +
+            propType +
+            '` supplied to ' +
+            componentName +
+            ', expected `number`.'
+        )
+      if (propValue < 1 || propValue > MAXSUBDIVISION)
+        return new Error(
+          'Invalid prop `' +
+            propName +
+            '` with value ' +
+            propValue +
+            ' supplied to ' +
+            componentName +
+            '. Allowed range is 1-' +
+            MAXSUBDIVISION +
+            '.'
+        )
+    }
+  },
+  isPlaying: PropTypes.bool,
   soundEnabled: PropTypes.bool,
   soundPattern: function(props, propName, componentName) {
     if (props[propName]) {
@@ -125,6 +200,7 @@ ProMetronome.propTypes = {
 ProMetronome.defaultProps = {
   bpm: 80,
   subdivision: 1,
+  isPlaying: true,
   soundEnabled: false,
   soundPattern: ''
 }
