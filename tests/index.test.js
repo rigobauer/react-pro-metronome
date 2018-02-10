@@ -34,7 +34,7 @@ describe('<ProMetronome />', () => {
     expect(wrapper.html()).to.equal('<div>120/3</div>')
   })
 
-  it('should shallow render a <ProMetronome /> printing quarter notes and 16th notes', () => {
+  it('should shallow render a <ProMetronome /> printing quarter notes and 16th notes and checking sound play', () => {
     let clock = sinon.useFakeTimers()
     sinon.stub(Howl.prototype, 'play')
     sinon.spy(ProMetronome.prototype, 'render')
@@ -101,7 +101,7 @@ describe('<ProMetronome />', () => {
     Howl.prototype.play.restore()
   })
 
-  it('should shallow render a <ProMetronome /> and check soundPattern type and length errors', () => {
+  it('should shallow render a <ProMetronome /> and check bpm, subdivision and soundPattern type and length errors', () => {
     sinon.stub(console, 'error')
 
     let interval = Math.floor(60000 / (80 * 4))

@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Howl } from 'howler'
 
+import { numberInRange, stringWithLength } from '../utils/advanced-prop-types'
+
 import click3SoundFileMP3 from './sounds/click3.mp3'
 import click3SoundFileOGG from './sounds/click3.ogg'
 import click3SoundFileAAC from './sounds/click3.aac'
@@ -108,92 +110,12 @@ class ProMetronome extends PureComponent {
 }
 
 ProMetronome.propTypes = {
-  bpm: function(props, propName, componentName) {
-    if (props[propName]) {
-      const propValue = props[propName],
-        propType = typeof propValue
-      if (propType !== 'number')
-        return new Error(
-          'Invalid prop `' +
-            propName +
-            '` of type `' +
-            propType +
-            '` supplied to ' +
-            componentName +
-            ', expected `number`.'
-        )
-      if (propValue < 1 || propValue > MAXBPM)
-        return new Error(
-          'Invalid prop `' +
-            propName +
-            '` with value ' +
-            propValue +
-            ' supplied to ' +
-            componentName +
-            '. Allowed range is 1-' +
-            MAXBPM +
-            '.'
-        )
-    }
-  },
-  subdivision: function(props, propName, componentName) {
-    if (props[propName]) {
-      const propValue = props[propName],
-        propType = typeof propValue
-      if (propType !== 'number')
-        return new Error(
-          'Invalid prop `' +
-            propName +
-            '` of type `' +
-            propType +
-            '` supplied to ' +
-            componentName +
-            ', expected `number`.'
-        )
-      if (propValue < 1 || propValue > MAXSUBDIVISION)
-        return new Error(
-          'Invalid prop `' +
-            propName +
-            '` with value ' +
-            propValue +
-            ' supplied to ' +
-            componentName +
-            '. Allowed range is 1-' +
-            MAXSUBDIVISION +
-            '.'
-        )
-    }
-  },
+  bpm: numberInRange(1, MAXBPM),
+  subdivision: numberInRange(1, MAXSUBDIVISION),
   isPlaying: PropTypes.bool,
   soundEnabled: PropTypes.bool,
-  soundPattern: function(props, propName, componentName) {
-    if (props[propName]) {
-      const propValue = props[propName],
-        propType = typeof propValue
-      if (propType !== 'string')
-        return new Error(
-          'Invalid prop `' +
-            propName +
-            '` of type `' +
-            propType +
-            '` supplied to ' +
-            componentName +
-            ', expected `string`.'
-        )
-      if (propValue.length > 0 && propValue.length !== 4 * props['subdivision'])
-        return new Error(
-          'Invalid prop `' +
-            propName +
-            '` with length ' +
-            propValue.length +
-            ' supplied to ' +
-            componentName +
-            ". Length value doesn't match with the subdivision, expected " +
-            4 * props['subdivision'] +
-            '.'
-        )
-    }
-  },
+  soundPattern: (props, propName, componentName) =>
+    stringWithLength(4 * props['subdivision'])(props, propName, componentName),
   render: PropTypes.func.isRequired
 }
 
