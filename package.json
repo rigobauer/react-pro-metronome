@@ -4,7 +4,12 @@
   "description": "react-pro-metronome React component",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "files": ["css", "es", "lib", "umd"],
+  "files": [
+    "css",
+    "es",
+    "lib",
+    "umd"
+  ],
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
@@ -28,27 +33,27 @@
     ]
   },
   "dependencies": {
-    "howler": "^2.0.8",
-    "prop-types": "^15.6.0"
+    "howler": "^2.0.15",
+    "prop-types": "^15.6.2"
   },
   "peerDependencies": {
     "react": "16.x"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "commitizen": "^2.9.6",
+    "chai": "^4.2.0",
+    "commitizen": "^3.0.4",
     "cz-conventional-changelog": "^2.1.0",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "husky": "^0.15.0-rc.6",
-    "lint-staged": "^6.1.0",
-    "nwb": "0.21.x",
-    "prettier": "^1.10.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "semantic-release": "^12.4.1",
-    "sinon": "^4.2.2",
-    "travis-deploy-once": "^4.3.4"
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "husky": "^1.1.2",
+    "lint-staged": "^7.3.0",
+    "nwb": "0.23.0",
+    "prettier": "^1.14.3",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "semantic-release": "^15.10.5",
+    "sinon": "^7.0.0",
+    "travis-deploy-once": "^5.0.9"
   },
   "author": "A. Iglesias",
   "homepage": "",
@@ -57,7 +62,11 @@
     "type": "git",
     "url": "https://github.com/rigobauer/react-pro-metronome.git"
   },
-  "keywords": ["react-component", "metronome", "react-metronome"],
+  "keywords": [
+    "react-component",
+    "metronome",
+    "react-metronome"
+  ],
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

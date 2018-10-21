@@ -10,6 +10,7 @@ module.exports = {
     }
   },
   karma: {
-    testContext: 'tests.webpack.js'
+    testContext: 'tests.webpack.js',
+    browsers: ['ChromeHeadless']
   }
 }

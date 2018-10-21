@@ -5,3 +5,13 @@
 /node_modules
 /umd
 npm-debug.log*
+
+#Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Lockfiles
+package-lock.json
+yarn.lock
